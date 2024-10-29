@@ -10,16 +10,15 @@
 
 [Exploratory Data Analysis](#exploratory-data-analysis)
 
-
 [Data Analysis](#data-analysis)
 
-DATA VISUALIZATION
+[Data Visualization](#data-visualization)
 
-FINDINGS AND RESULT
+[Findings and Results](#findings-and-results)
 
-RECOMMENDATION
+[Recommendation](#recommendation)
 
-LINCENSE
+[License](#license)
 
 
 ### Project Overview
@@ -125,51 +124,55 @@ Base on this Analysis, the company should have a promo package for STANDARD AND 
 -	Tables were created for sales Data and customer data
 
 QUERY 1 (Total sales for product category)
-  
-```select * from [dbo].[capstonesalesdata]
+```sql  
+select * from [dbo].[capstonesalesdata]
+```
+```sql
 SELECT PRODUCT,sum(TOTAL_SALES) as totalsales
 from [dbo].[capstonesalesdata]
 GROUP BY PRODUCT
-
+```
 QUERY 2(NUMBER OF SALES TRANSACTION IN EACH REGION)
-
+```sql
 SELECT (region) AS region_count, SUM(quantity) AS total_quantity
 FROM [dbo].[capstonesalesdata]
 GROUP BY region
 ORDER BY total_quantity ASC
-
+```
 QUERY 3(HIGHEST SELLING PRODUCT BY VALUE)
+```sql
 select product, max (total_sales) as highestsales
 from [dbo].[capstonesalesdata]
 group by product
 order by highestsales DESC
-
+```
 QUERY 4(TOTAL REVUNUE PER PRODUCT)
+```sql
 SELECT Product, 
        SUM(TOTAL_SALES) AS TotalQuantitySold
 FROM [dbo].[capstonesalesdata]
 GROUP BY Product
 ORDER BY TotalQuantitySold DESC
-
+```
 #### QUERY 4(TOTAL SALES FOR THE CURRENT YEAR 2023)
-
+```sql
 SELECT FORMAT(orderdate, '2023-01') AS yearmonth,
        SUM(total_sales) AS monthlysales
 FROM [dbo].[capstonesalesdata]
 WHERE YEAR(orderdate) = 2023
 GROUP BY FORMAT(orderdate, '2023-01')
 ORDER BY yearmonth
-
+```
 #### QUERY 5(TOP 5 CUSTOMER)
-
+```sql
 select top 5 
 sum (total_sales) AS total_sales_sum, Customer_id
 from [dbo].[capstonesalesdata]
 group by customer_id
 order by total_sales_sum desc
-
+```
 #### QUERY 6(PERCENTAGE OF TOTAL SALES BY REGION)
-
+```sql
 select region,
 sum(total_sales) as totalrevenue,
 (sum(total_sales)*100/(select sum(total_sales)from litasalesdata))as
@@ -178,9 +181,9 @@ from
 [dbo].[capstonesalesdata]
 group by region
 order by totalrevenue desc
-
+```
 #### QUERY 7(PRODUCT THAT WAS NOT SOLD IN THE LAST QUARTER)
-
+```sql
 SELECT product
 FROM [dbo].[capstonesalesdata]
 WHERE product NOT IN (
@@ -189,20 +192,22 @@ SELECT product
     WHERE orderdate >= DATEADD(QUARTER, -1, GETDATE()) -- Last quarter
 )
 GROUP BY product
-
+```
 #### QUERY 8
+```sql
 select * from [dbo].[capstonecustomerdata]
-
+```
 (NUMBER OF CUSTOMER PER REGION)
-
+```sql
 SELECT COUNT(customerName) AS totalcustomer, region
 FROM [dbo].[capstonecustomerdata]
 WHERE region IN ('north', 'south', 'west', 'east')
 GROUP BY region
 ORDER BY region
-
+```
 
 #### QUERY 9 (MOST POPULAR SUBSCRIPTION TYPE BY NUMBER OF CUSTOMER)
+```sql
 SELECT 
     subscriptionType,
     COUNT(customerName) AS CustomerCount
@@ -212,17 +217,18 @@ GROUP BY
     subscriptionType
 ORDER BY 
     CustomerCount DESC
-
+```
 
 #### QUERY 10 (CUSTOMER THAT CANCELED THEIR SUBSCRIPTION WITHIN 6MONTHS)
-
+```sql
 SELECT customerName
 FROM [dbo].[capstonecustomerdata]
 WHERE canceled = 'true' 
 AND SubscriptionEnd >= DATEADD(MONTH, -6, GETDATE()) 
 ORDER BY SubscriptionEnd DESC
-
+```
 #### QUERY 11 (SUBSCRIPTION DURATION FOR EACH CUSTOMER)
+```sql
 SELECT 
     customerName, 
     SUM(DATEDIFF(DAY, 
@@ -234,8 +240,9 @@ GROUP BY
     customerName
 ORDER BY 
     SubscriptionDuration
-
+```
    #### QUERY 12 (AVERAGE SUBSCRIPTION DURATION)
+```sql
 SELECT 
     AVG(subscriptionDuration) AS averageSubscriptionDuration
 FROM (
@@ -247,8 +254,10 @@ FROM (
         subscriptionStart IS NOT NULL AND
         subscriptionEnd IS NOT NULL
 ) AS customerDurations
+```
 
 #### QUERY 13(CUSTOMERS SUBSCRIPTION THAT IS MORE THAN 12 MONTHS)
+```sql
 SELECT
     customerName,
     DATEDIFF(MONTH, 
@@ -262,34 +271,60 @@ WHERE
     AND DATEDIFF(MONTH, 
                  CONVERT(datetime, subscriptionStart, 120), 
                  CONVERT(datetime, subscriptionEnd, 120)) > 12
-
+```
 #### QUERY 14(TOTAL REVENUE BY SUBSCRIPTION TYPE)
+```sql
 select
 subscriptiontype,
 sum(revenue) as totalrevenue
 from [dbo].[capstonecustomerdata]
 group by SubscriptionType
 order by totalrevenue
-
+```
 #### QUERY 15(TOP 3 REGION BY SUBSCRIPTION CANCELATION)
+```sql
 SELECT TOP 3 region, COUNT(*) AS cancellation_count
 FROM [dbo].[capstonecustomerdata]
 WHERE canceled = 'TRUE'
 GROUP BY region
 ORDER BY cancellation_count DESC
+```
 
 #### QUERY 16(TOTAL NUMBER OF ACTIVE AND CANCELED SUBSCRIPTION)
+```sql
 SELECT 
   SUM(CASE WHEN canceled ='TRUE' THEN 1 ELSE 0 END) AS totalcanceled,
   SUM(CASE WHEN canceled = 'FALSE' THEN 1 ELSE 0 END) AS totalactive
-FROM [dbo].[capstonecustomerdata]```
+FROM [dbo].[capstonecustomerdata]
+```
+### Data Visualization
+#### POWER BI VISUALIZATION
+-	The file was uploaded from excel workbook
+-	The data was transformed by removing NULL columns
+  
+TABLE1 (SALES DATA)
 
+ ![sales data](https://github.com/user-attachments/assets/762136ff-889f-42d1-88ca-12e79657c35d)
 
+TABLE 2(CUSTOMER DATA)
 
+![customer data](https://github.com/user-attachments/assets/d2c5c13d-3f50-461d-975f-f7950c3930f5)
 
+### Findings And Results
+In summary;
+1.	Focus on Premium Subscribers: Since Premium subscribers are the highest contributors to revenue, focusing on retention, personalized offers, and loyalty programs for this segment will likely yield the highest .
+2.	Target Basic  subscribers for Upselling: For customers in basic scription, targeted campaigns that encourage upgrades to Standard or Premium subscriptions could increase their lifetime value.
+3.	Regional Marketing: High-performing regions should continue to be nurtured, while regions with a high proportion of Basic subscribers might benefit from promotional activities to encourage upgrades.
+4.	Product and Inventory Optimization: Ensure sufficient stock of top-performing products, especially around peak sales months, to meet demand and minimize stockouts.
+These findings enable data-driven strategies, helping the company to optimize customer engagement, increase revenue, and better manage customer retention.
 
+### Recommendation
+This segmentation model provides a strategic foundation to:
 
+Tailor marketing and engagement strategies per segment to maximize customer lifetime value.
+Focus on regions and subscription types driving the most revenue.
+Enhance product management by prioritizing high-performing products and addressing low-performing ones.
+Overall, this analysis enables data-driven decision-making, allowing for more effective resource allocation, targeted marketing efforts, and strategic planning aligned with customer behavior patterns.
 
- 
-
-
+### License
+This repository is licensed by Apache 2.0
