@@ -327,4 +327,4 @@ Enhance product management by prioritizing high-performing products and addressi
 Overall, this analysis enables data-driven decision-making, allowing for more effective resource allocation, targeted marketing efforts, and strategic planning aligned with customer behavior patterns.
 
 ### License
-This repository is licensed by Apache 2.0
+This repository is licensed by [Apache 2.0](apache-2.0)
