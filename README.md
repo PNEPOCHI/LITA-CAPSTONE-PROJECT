@@ -22,7 +22,7 @@
 
 
 ### Project Overview
-The goal of this project is to analyze sales performance data to uncover insights regarding sales trends, product performance, customer segmentation, and regional sales efficiency. This will involve using  Excel for data cleaning and preprocesing, SQL for data extraction and Power BI for interactive visualization and reporting.
+The goal of this project is to analyze sales performance data to uncover insights regarding sales trends, product performance and regional sales efficiency. This will involve using  Excel for data cleaning and preprocesing, SQL for data extraction and Power BI for interactive visualization and reporting.
 
 ### Data Source
 This Dataset will be given on the respository.
@@ -42,7 +42,7 @@ This Dataset will be given on the respository.
         
 #### STEP 2: DATA CLEANING IN EXCEL
   -  Removed all duplicate rows that may distort the analysis.
--  Create new calculated fields, like total sales, subscription Duration, average subscription duration
+-  Create new calculated fields, like total sales
 
   ### Exploratory Data Analysis 
 
