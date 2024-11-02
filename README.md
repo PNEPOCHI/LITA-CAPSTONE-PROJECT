@@ -191,11 +191,12 @@ TABLE1 (SALES DATA)
 
 ### Findings And Results
 In summary;
-1.	Focus on Premium Subscribers: Since Premium subscribers are the highest contributors to revenue, focusing on retention, personalized offers, and loyalty programs for this segment will likely yield the highest .
-2.	Target Basic  subscribers for Upselling: For customers in basic scription, targeted campaigns that encourage upgrades to Standard or Premium subscriptions could increase their lifetime value.
-3.	Regional Marketing: High-performing regions should continue to be nurtured, while regions with a high proportion of Basic subscribers might benefit from promotional activities to encourage upgrades.
-4.	Product and Inventory Optimization: Ensure sufficient stock of top-performing products, especially around peak sales months, to meet demand and minimize stockouts.
-These findings enable data-driven strategies, helping the company to optimize customer engagement, increase revenue, and better manage customer retention.
+In summary :
+
+  •	Shoe is the highest sold product
+  
+  •	South the best-performing in terms of total sales.
+
 
 ### Recommendation
 1.	Targeted Marketing Campaigns:
