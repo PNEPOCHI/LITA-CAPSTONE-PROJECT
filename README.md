@@ -25,8 +25,8 @@
 The goal of this project is to analyze sales performance data to uncover insights regarding sales trends, product performance and regional sales efficiency. This will involve using  Excel for data cleaning and preprocesing, SQL for data extraction and Power BI for interactive visualization and reporting.
 
 ### Data Source
-This Dataset will be given on the respository.
- This entails Sales data from a retail company (which include transaction details, product categories, customer demographics, and regional data).
+This Dataset will be given on the repository.
+ This entails Sales data from a retail company (which include transaction details, product categories and regional data).
 
  ### DATA TOOLS
  EXCEL for Data cleaning and preprocesing
@@ -47,8 +47,7 @@ This Dataset will be given on the respository.
   ### Exploratory Data Analysis 
 
  - summarize total sales by product, region, and month using pivot Table
-  - using pivot tables to find subscription patterns.
-  - What total sales for each product category. 
+ - What total sales for each product category. 
   - What number of sales transactions in each region. 
   - What is the highest-selling product by total sales value. 
   - What is total revenue per product. 
@@ -57,12 +56,7 @@ This Dataset will be given on the respository.
    - What the percentage of total sales contributed by each region. 
    - What products with no sales in the last quarter.
    - What is the total number of customers from each region. 
-   - What the most popular subscription type by the number of customers. 
-   - What is the average subscription duration for all customers. 
-   - customers with subscriptions longer than 12 months. 
-   - What is the total revenue by subscription type. 
-   - What is the top 3 regions by subscription cancellations. 
-   - What isthe total number of active and canceled subscriptions.
+     
 
      ### Data Analysis
    #### TABLE 1(FINDINGS AND RESULT)
@@ -108,16 +102,6 @@ According to my findings February has the highest sales in both years while the 
 
 According to the sales trend more goods should be supply in February
 
-#### TABLE 4(FINDINGS AND RESULT) 
-
-![TABLE 4](https://github.com/user-attachments/assets/f477954c-0993-4677-8188-454077a2f9e3)
-
-This table entails Revenue by subscription type, there are basically 3 types of subscription which are BASIC, PREMIUM AND STANDARD 
-Basic has the highest Revenue with a value of 33,776,737 while Standard has the lowest Revenue with a value of 16,864,376 
-
-#### RECOMDATION
-
-Base on this Analysis, the company should have a promo package for STANDARD AND PREMIUM SUBSCRIPTION
 
 #### SQL ANALYSIS
 -	The file was converted to csv format and imported to SQL server
@@ -193,111 +177,9 @@ SELECT product
 )
 GROUP BY product
 ```
-#### QUERY 8
-```sql
-select * from [dbo].[capstonecustomerdata]
-```
-(NUMBER OF CUSTOMER PER REGION)
-```sql
-SELECT COUNT(customerName) AS totalcustomer, region
-FROM [dbo].[capstonecustomerdata]
-WHERE region IN ('north', 'south', 'west', 'east')
-GROUP BY region
-ORDER BY region
-```
 
-#### QUERY 9 (MOST POPULAR SUBSCRIPTION TYPE BY NUMBER OF CUSTOMER)
-```sql
-SELECT 
-    subscriptionType,
-    COUNT(customerName) AS CustomerCount
-FROM 
-    [dbo].[capstonecustomerdata]
-GROUP BY 
-    subscriptionType
-ORDER BY 
-    CustomerCount DESC
-```
-
-#### QUERY 10 (CUSTOMER THAT CANCELED THEIR SUBSCRIPTION WITHIN 6MONTHS)
-```sql
-SELECT customerName
-FROM [dbo].[capstonecustomerdata]
-WHERE canceled = 'true' 
-AND SubscriptionEnd >= DATEADD(MONTH, -6, GETDATE()) 
-ORDER BY SubscriptionEnd DESC
-```
-#### QUERY 11 (SUBSCRIPTION DURATION FOR EACH CUSTOMER)
-```sql
-SELECT 
-    customerName, 
-    SUM(DATEDIFF(DAY, 
-                 CONVERT(datetime, subscriptionStart, 120), 
-                 CONVERT(datetime, subscriptionEnd, 120))) AS subscriptionDuration
-From
-    [dbo].[capstonecustomerdata]
-GROUP BY 
-    customerName
-ORDER BY 
-    SubscriptionDuration
-```
-   #### QUERY 12 (AVERAGE SUBSCRIPTION DURATION)
-```sql
-SELECT 
-    AVG(subscriptionDuration) AS averageSubscriptionDuration
-FROM (
-    SELECT 
-        DATEDIFF(DAY, subscriptionStart, subscriptionEnd) AS subscriptionDuration
-    FROM 
-        [dbo].[capstonecustomerdata]
-    WHERE
-        subscriptionStart IS NOT NULL AND
-        subscriptionEnd IS NOT NULL
-) AS customerDurations
-```
-
-#### QUERY 13(CUSTOMERS SUBSCRIPTION THAT IS MORE THAN 12 MONTHS)
-```sql
-SELECT
-    customerName,
-    DATEDIFF(MONTH, 
-             CONVERT(datetime, subscriptionStart, 120), 
-             CONVERT(datetime, subscriptionEnd, 120)) AS subscriptionDurationInMonths
-FROM 
-    [dbo].[capstonecustomerdata]
-WHERE 
-    subscriptionStart IS NOT NULL AND
-    subscriptionEnd IS NOT NULL
-    AND DATEDIFF(MONTH, 
-                 CONVERT(datetime, subscriptionStart, 120), 
-                 CONVERT(datetime, subscriptionEnd, 120)) > 12
-```
-#### QUERY 14(TOTAL REVENUE BY SUBSCRIPTION TYPE)
-```sql
-select
-subscriptiontype,
-sum(revenue) as totalrevenue
-from [dbo].[capstonecustomerdata]
-group by SubscriptionType
-order by totalrevenue
-```
-#### QUERY 15(TOP 3 REGION BY SUBSCRIPTION CANCELATION)
-```sql
-SELECT TOP 3 region, COUNT(*) AS cancellation_count
-FROM [dbo].[capstonecustomerdata]
-WHERE canceled = 'TRUE'
-GROUP BY region
-ORDER BY cancellation_count DESC
-```
-
-#### QUERY 16(TOTAL NUMBER OF ACTIVE AND CANCELED SUBSCRIPTION)
-```sql
-SELECT 
-  SUM(CASE WHEN canceled ='TRUE' THEN 1 ELSE 0 END) AS totalcanceled,
-  SUM(CASE WHEN canceled = 'FALSE' THEN 1 ELSE 0 END) AS totalactive
-FROM [dbo].[capstonecustomerdata]
-```
 ### Data Visualization
+
 #### POWER BI VISUALIZATION
 -	The file was uploaded from excel workbook
 -	The data was transformed by removing NULL columns
@@ -306,9 +188,6 @@ TABLE1 (SALES DATA)
 
  ![sales data](https://github.com/user-attachments/assets/762136ff-889f-42d1-88ca-12e79657c35d)
 
-TABLE 2(CUSTOMER DATA)
-
-![customer data](https://github.com/user-attachments/assets/d2c5c13d-3f50-461d-975f-f7950c3930f5)
 
 ### Findings And Results
 In summary;
